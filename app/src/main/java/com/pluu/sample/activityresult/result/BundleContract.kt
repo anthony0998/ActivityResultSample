@@ -9,10 +9,6 @@ import androidx.activity.result.contract.ActivityResultContract
 class BundleContract(private val targetActivity: Class<*>) :
     ActivityResultContract<Bundle, Bundle>() {
 
-    companion object {
-        const val KEY = "BUNDLE_CONTRACT"
-    }
-
     override fun createIntent(
         context: Context, input: Bundle
     ): Intent {
@@ -23,7 +19,7 @@ class BundleContract(private val targetActivity: Class<*>) :
 
     override fun parseResult(resultCode: Int, intent: Intent?): Bundle? {
         return if (resultCode == Activity.RESULT_OK && intent != null) {
-            intent.getBundleExtra(KEY)
+            intent.extras
         } else {
             null
         }

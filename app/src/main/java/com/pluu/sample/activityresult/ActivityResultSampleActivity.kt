@@ -21,7 +21,6 @@ class ActivityResultSampleActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView {
             add(::LinearLayout) {
 

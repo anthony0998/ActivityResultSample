@@ -5,35 +5,36 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import kotlin.reflect.KClassifier
-import kotlin.reflect.javaType
-import kotlin.reflect.typeOf
+import com.pluu.sample.activityresult.result.DefaultContract.Companion.DEFAULT_KEY
 
-inline fun <reified T, reified R> createDefaultContract(targetActivity: Class<*>): DefaultContract<T, R> =
-    DefaultContract(targetActivity, R::class.java)
+inline fun <reified T, reified R> createDefaultContract(
+    targetActivity: Class<*>,
+    key: String = DEFAULT_KEY
+): DefaultContract<T, R> =
+    DefaultContract(targetActivity, R::class.java, key)
 
 open class DefaultContract<T, R>(
     private val targetActivity: Class<*>,
-    private val resultClass: Class<R>
+    private val resultClass: Class<R>,
+    private val key: String = DEFAULT_KEY
 ) :
     ActivityResultContract<T, R>() {
 
     companion object {
-        const val KEY = "DEFAULT_CONTRACT"
+        const val DEFAULT_KEY = "DEFAULT_KEY"
     }
 
     override fun createIntent(
         context: Context, input: T
     ): Intent {
         return Intent(context, targetActivity).apply {
-            putExtra(KEY, Gson().toJson(input))
+            putExtra(key, Gson().toJson(input))
         }
     }
 
     override fun parseResult(resultCode: Int, intent: Intent?): R? {
         return if (resultCode == Activity.RESULT_OK && intent != null) {
-            return Gson().fromJson(intent.getStringExtra(KEY), resultClass)
+            return Gson().fromJson(intent.getStringExtra(key), resultClass)
         } else {
             null
         }

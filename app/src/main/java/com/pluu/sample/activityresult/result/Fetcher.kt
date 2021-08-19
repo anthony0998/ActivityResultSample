@@ -12,19 +12,25 @@ import kotlin.coroutines.suspendCoroutine
  * @param R Class of result object
  * @param V Class of target Activity which will redirect to
  */
-inline fun <reified T, reified R, reified V> ActivityResultCaller.createDefaultFetcher(): Fetcher<T, R> =
+inline fun <reified T, reified R, reified V> ActivityResultCaller.createDefaultFetcher(
+    key: String = DefaultContract.DEFAULT_KEY
+): Fetcher<T, R> =
     Fetcher(
         this,
-        createDefaultContract(V::class.java)
+        createDefaultContract(V::class.java, key)
     )
 
-class Fetcher<T, R>(activityResultCaller: ActivityResultCaller, contract: ActivityResultContract<in T, out R>) {
+class Fetcher<T, R>(
+    activityResultCaller: ActivityResultCaller,
+    contract: ActivityResultContract<in T, out R>
+) {
 
     private var continuation: Continuation<R?>? = null
 
-    private val editNameLauncher = activityResultCaller.registerForActivityResult(contract) { result ->
-        continuation?.resumeWith(Result.success(result))
-    }
+    private val editNameLauncher =
+        activityResultCaller.registerForActivityResult(contract) { result ->
+            continuation?.resumeWith(Result.success(result))
+        }
 
     suspend operator fun invoke(name: T) = suspendCoroutine<R?> { continuationIn ->
         this.continuation = continuationIn

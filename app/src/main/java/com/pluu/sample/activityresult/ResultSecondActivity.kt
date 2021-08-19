@@ -18,7 +18,7 @@ class ResultSecondActivity : AppCompatActivity() {
                 orientation = LinearLayout.VERTICAL
                 button("Call Finish ~ Result Ok") {
                     val result = Intent().apply {
-                        putExtra(DefaultContract.KEY, Gson().toJson(Person("default-test", 15)))
+                        putExtra(DefaultContract.DEFAULT_KEY, Gson().toJson(Person("default-test", 15)))
 //                        val bundle = Bundle()
 //                        bundle.putParcelable(KEY_PERSON, Person("bundle-test", 25))
 //                        putExtra(BundleContract.KEY, bundle)
