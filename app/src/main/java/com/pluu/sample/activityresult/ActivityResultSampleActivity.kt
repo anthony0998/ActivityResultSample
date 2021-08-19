@@ -5,22 +5,14 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.pluu.sample.activityresult.bean.Person
-import com.pluu.sample.activityresult.result.BundleContract
-import com.pluu.sample.activityresult.result.DefaultContract
-import com.pluu.sample.activityresult.result.Fetcher
+import com.pluu.sample.activityresult.result.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class ActivityResultSampleActivity : AppCompatActivity() {
 
-    private val defaultFetcher = Fetcher(
-        this,
-        DefaultContract<String, Person>(
-            targetActivity = ResultSecondActivity::class.java,
-            Person::class.java
-        )
-    )
+    private val fetch = createDefaultFetcher<String, Person, ResultSecondActivity>()
 
     private val bundleFetcher = Fetcher(
         this,
@@ -36,7 +28,7 @@ class ActivityResultSampleActivity : AppCompatActivity() {
                 button("Show second Activity (Custom Result)") {
                     GlobalScope.launch(Dispatchers.Main) {
                         // default fetcher
-                        defaultFetcher("hello world!")?.let {
+                        fetch("hello world!")?.let {
                             toast(Gson().toJson(it))
                         }
                         //bundle fetcher
