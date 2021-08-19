@@ -11,6 +11,7 @@ import kotlin.coroutines.suspendCoroutine
  * @param T Class of input param
  * @param R Class of result object
  * @param V Class of target Activity which will redirect to
+ * @param key key of the param we pass out and receive, default value is DefaultContract.DEFAULT_KEY
  */
 inline fun <reified T, reified R, reified V> ActivityResultCaller.createDefaultFetcher(
     key: String = DefaultContract.DEFAULT_KEY
