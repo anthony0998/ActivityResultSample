@@ -22,7 +22,7 @@ class ResultSecondActivity : AppCompatActivity() {
 //                                key_int_case to 1
 //                            )
 //                        )
-                        putExtra(KEY, "Quncy")
+                        putExtra(PEOPLE_NAME, "Quncy")
                     }
                     setResult(Activity.RESULT_OK, result)
                     finish()
@@ -32,7 +32,8 @@ class ResultSecondActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val key_string_case = "typeString"
-        const val key_int_case = "typeInt"
+        const val PEOPLE_NAME = "PEOPLE_NAME"
+        const val KEY_NAME = "key_name"
+        const val KEY_PERSON = "key_person"
     }
 }
