@@ -23,7 +23,6 @@ open class DefaultContract<T, R>(
         const val KEY = "DEFAULT_CONTRACT"
     }
 
-
     override fun createIntent(
         context: Context, input: T
     ): Intent {

@@ -5,6 +5,13 @@ import androidx.activity.result.contract.ActivityResultContract
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.suspendCoroutine
 
+/**
+ * Create a default fetcher
+ *
+ * @param T Class of input param
+ * @param R Class of result object
+ * @param V Class of target Activity which will redirect to
+ */
 inline fun <reified T, reified R, reified V> ActivityResultCaller.createDefaultFetcher(): Fetcher<T, R> =
     Fetcher(
         this,
