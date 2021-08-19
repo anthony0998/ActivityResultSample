@@ -15,8 +15,10 @@ import kotlinx.coroutines.launch
 class ActivityResultSampleActivity : AppCompatActivity() {
 
     private val defaultFetcher = Fetcher(
-        this, DefaultContract<String, Person>(
-            targetActivity = ResultSecondActivity::class.java
+        this,
+        DefaultContract<String, Person>(
+            targetActivity = ResultSecondActivity::class.java,
+            Person::class.java
         )
     )
 

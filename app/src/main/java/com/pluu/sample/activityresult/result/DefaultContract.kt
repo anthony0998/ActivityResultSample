@@ -5,9 +5,11 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
-open class DefaultContract<T, R>(private val targetActivity: Class<*>) :
+open class DefaultContract<T, R>(
+    private val targetActivity: Class<*>,
+    private val resultClass: Class<R>
+) :
     ActivityResultContract<T, R>() {
 
     companion object {
@@ -24,7 +26,7 @@ open class DefaultContract<T, R>(private val targetActivity: Class<*>) :
 
     override fun parseResult(resultCode: Int, intent: Intent?): R? {
         return if (resultCode == Activity.RESULT_OK && intent != null) {
-            return Gson().fromJson(intent.getStringExtra(KEY), object : TypeToken<R>() {}.type)
+            return Gson().fromJson(intent.getStringExtra(KEY), resultClass)
         } else {
             null
         }
