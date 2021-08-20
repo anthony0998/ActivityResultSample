@@ -15,9 +15,9 @@ import kotlinx.coroutines.launch
 
 class ActivityResultSampleActivity : AppCompatActivity() {
 
-    private val default = createDefaultFetcher<String, List<Person>, ResultSecondActivity>()
+    private val defaultFetcher = createDefaultFetcher<String, List<Person>, ResultSecondActivity>()
 
-    private val bundle = createBundleFetcher<ResultSecondActivity>()
+    private val bundleFetcher = createBundleFetcher<ResultSecondActivity>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,18 +27,18 @@ class ActivityResultSampleActivity : AppCompatActivity() {
                 button("Show second Activity (Custom Result)") {
                     GlobalScope.launch(Dispatchers.Main) {
                         // 默认创建方式看这里 ：default fetcher sample
-//                        default("hello world!")?.let {
+//                        defaultFetcher("hello world!")?.let {
 //                            toast(Gson().toJson(it))
 //                        }
 
                         // Bundle的创建方式看这里 ： bundle fetcher sample
-                        val inputBundle = Bundle()
-                        inputBundle.putString(KEY_NAME, "abc")
-                        inputBundle.putParcelable(
+                        val input = Bundle()
+                        input.putString(KEY_NAME, "abc")
+                        input.putParcelable(
                             KEY_PERSON,
                             Person("张三", 15)
                         )
-                        bundle(inputBundle)?.let {
+                        bundleFetcher(input)?.let {
                             val person: Person? = it.getParcelable(KEY_PERSON)
                             toast(Gson().toJson(person))
                         }
