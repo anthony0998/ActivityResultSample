@@ -40,13 +40,13 @@ class Fetcher<T, R>(
 
     private var continuation: Continuation<R?>? = null
 
-    private val editNameLauncher =
+    private val launcher =
         activityResultCaller.registerForActivityResult(contract) { result ->
             continuation?.resumeWith(Result.success(result))
         }
 
     suspend operator fun invoke(name: T) = suspendCoroutine<R?> { continuationIn ->
         this.continuation = continuationIn
-        editNameLauncher.launch(name)
+        launcher.launch(name)
     }
 }
