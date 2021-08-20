@@ -6,7 +6,11 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContract
 
-class BundleContract(private val targetActivity: Class<*>) :
+fun createBundleContract(
+    targetActivity: Class<*>,
+): BundleContract = BundleContract(targetActivity)
+
+open class BundleContract(private val targetActivity: Class<*>) :
     ActivityResultContract<Bundle, Bundle>() {
 
     override fun createIntent(
